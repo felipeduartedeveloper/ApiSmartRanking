@@ -5,6 +5,7 @@ import { JogadoresService } from './jogadores.service';
 import { Jogador } from './interfaces/jogador.interface';
 import { Get } from '@nestjs/common';
 import { Query } from '@nestjs/common';
+import { Delete } from '@nestjs/common';
 
 @Controller('api/v1/jogadores')
 export class JogadoresController {
@@ -23,5 +24,9 @@ export class JogadoresController {
     } else {
       return await this.jogadoresService.consultarTodosJogadores();
     }
+  }
+  @Delete()
+  async deletarJogador(@Query('email') email: string): Promise<void> {
+    this.jogadoresService.deletarJogador(email);
   }
 }

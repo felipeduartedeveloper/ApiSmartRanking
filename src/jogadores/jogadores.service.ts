@@ -10,13 +10,13 @@ export class JogadoresService {
   private readonly logger = new Logger(JogadoresService.name);
   async criarAtualizarJogador(criarJogadorDto: CriarJogadorDto): Promise<void> {
     const { email } = criarJogadorDto;
-    const jogadorEncontrado = await this.jogadores.find(
+    const jogadorEncontrado = this.jogadores.find(
       (jogador) => jogador.email === email,
     );
     if (jogadorEncontrado) {
-      return this.atualizar(jogadorEncontrado, criarJogadorDto);
+      this.atualizar(jogadorEncontrado, criarJogadorDto);
     } else {
-      await this.criar(criarJogadorDto);
+      this.criar(criarJogadorDto);
     }
   }
 
@@ -24,13 +24,21 @@ export class JogadoresService {
     return await this.jogadores;
   }
   async consultarTodosJogadorPeloEmail(email: string): Promise<Jogador> {
-    const jogadorEncontrado = await this.jogadores.find(
+    const jogadorEncontrado = this.jogadores.find(
       (jogador) => jogador.email === email,
     );
     if (!jogadorEncontrado) {
       throw new NotFoundException(`Jogador com e-mail ${email} não encontrado`);
     }
     return jogadorEncontrado;
+  }
+  async deletarJogador(email): Promise<void> {
+    const jogadorEncontrado = this.jogadores.find(
+      (jogador) => jogador.email === email,
+    );
+    this.jogadores = this.jogadores.filter(
+      (jogador) => jogador.email !== jogadorEncontrado.email,
+    );
   }
 
   //criando jogador com base na interface
