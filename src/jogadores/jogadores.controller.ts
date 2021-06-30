@@ -20,7 +20,7 @@ export class JogadoresController {
     @Query('email') email: string,
   ): Promise<Jogador[] | Jogador> {
     if (email) {
-      return await this.jogadoresService.consultarTodosJogadorPeloEmail(email);
+      return await this.jogadoresService.consultarJogadorPeloEmail(email);
     } else {
       return await this.jogadoresService.consultarTodosJogadores();
     }
