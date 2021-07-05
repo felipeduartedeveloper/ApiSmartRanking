@@ -25,7 +25,7 @@ export class JogadoresController {
   }
   @Get()
   async consultarJogadores(
-    @Query('email') email: string,
+    @Query('email', JogadoresValidacaoParametroPipe) email: string,
   ): Promise<Jogador[] | Jogador> {
     if (email) {
       return await this.jogadoresService.consultarJogadorPeloEmail(email);
